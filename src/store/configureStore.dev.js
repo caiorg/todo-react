@@ -1,12 +1,12 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import { browserHistory } from "react-router";
-import { routerMiddleware } from "react-router-redux";
-import reduxImmutableStateInvariant from "redux-immutable-state-invariant";
-import thunk from "redux-thunk";
-import promiseMiddleware from "redux-promise-middleware";
-import logger from "redux-logger";
-import rootReducer from "../reducers";
-import errorMiddleware from "../middleware/error";
+import { createStore, applyMiddleware, compose } from 'redux';
+import { browserHistory } from 'react-router';
+import { routerMiddleware } from 'react-router-redux';
+import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
+import thunk from 'redux-thunk';
+import promiseMiddleware from 'redux-promise-middleware';
+import logger from 'redux-logger';
+import rootReducer from '../reducers';
+import errorMiddleware from '../middleware/error';
 
 const routingMiddleware = routerMiddleware(browserHistory);
 
