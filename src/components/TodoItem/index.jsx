@@ -8,12 +8,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-const Todo = ({
+const TodoItem = ({
   onClick,
   completed,
   text
 }) => {
-  const itemIcon = completed ? <AssignmentIcon /> : <AssignmentTurnedInIcon />;
+  const itemIcon = completed ? <AssignmentTurnedInIcon /> : <AssignmentIcon />;
   return <ListItem
     onClick={onClick}
     style={{
@@ -25,10 +25,10 @@ const Todo = ({
   </ListItem>;
 };
 
-Todo.propTypes = {
+TodoItem.propTypes = {
   onClick: PropTypes.func.isRequired,
   completed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired
 };
 
-export default Todo;
+export default TodoItem;

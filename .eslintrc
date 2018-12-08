@@ -36,5 +36,10 @@
       "avoidEscape": true
     }],
     "block-spacing": ["warn", "never"]
+  },
+  "settings": {
+    "react": {
+      "version": "16.6.3"
+    }
   }
 }

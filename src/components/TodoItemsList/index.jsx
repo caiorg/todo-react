@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 // CUSTOM COMPONENTS
-import Todo from './Todo';
+import TodoItem from '../TodoItem';
 
-const TodoList = ({
+const TodoItemsList = ({
   todos,
   onClick
 }) => {
@@ -16,8 +16,11 @@ const TodoList = ({
       todos.map((todo, index) =>
         (
           <React.Fragment key={index}>
-            <Todo {...todo} onClick={onClick(index)} />
-            <Divider />
+            <TodoItem {...todo} onClick={onClick(index)} />
+            {
+              index < todos.length - 1 &&
+              <Divider />
+            }
           </React.Fragment>
         )
       )
@@ -25,9 +28,9 @@ const TodoList = ({
   </List>;
 };
 
-TodoList.propTypes = {
-  todos: PropTypes.object.isRequired,
-  onClick: PropTypes.object.isRequired,
+TodoItemsList.propTypes = {
+  todos: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
-export default TodoList;
+export default TodoItemsList;
