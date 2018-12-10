@@ -27,10 +27,10 @@ class WithSidebarApi {
       http.post(`${api}/list`, payload)
         .then(res => {
           if (res.status === 204) {
-            resolve([]);
+            resolve({});
           }
 
-          resolve([...res.data]);
+          resolve({...res.data});
         })
         .catch(err => {
           if (err.response && err.response.data)

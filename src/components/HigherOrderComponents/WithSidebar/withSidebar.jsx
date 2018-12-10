@@ -19,8 +19,14 @@ import AddIcon from '@material-ui/icons/Add';
 import CreateTodoList from './views/create-todo-list';
 
 const styles = {
-  list: {
-    width: 250
+  listWrapper: {
+    width: 250,
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column'
+  },
+  firstList: {
+    flex: 1
   }
 };
 
@@ -41,7 +47,15 @@ const withSidebar = (WrappedComponent) => {
     }
 
     componentDidMount() {
-      this.props.actions.getTodoLists();
+      this.props.actions.getTodoLists()
+        .then(res => {
+          if (!Array.isArray(res.value) || res.value.length === 0) {
+            this.setState({
+              open: true,
+              createTodoList: true
+            });
+          }
+        });
     }
 
     toggleDrawer = () => {
@@ -72,20 +86,28 @@ const withSidebar = (WrappedComponent) => {
         name: fields.listName
       };
 
-      actions.createTodoList(payload);
+      actions.createTodoList(payload)
+        .then(() => {
+          this.props.actions.getTodoLists();
+          this.toggleTodoListCreation();
+        })
+        .catch(err => {
+          //eslint-disable-next-line
+          console.log(err);
+        });
     }
 
     get sideList() {
-      const {withSidebar: {todosLists}} = this.props;
-      return <React.Fragment>
-        <List>
+      const {withSidebar: {lists: {todosLists}}, classes} = this.props;
+      return <div className={classes.listWrapper}>
+        <List className={classes.firstList}>
           {
             todosLists &&
             todosLists.length > 0 &&
             todosLists.map((todo, index) => (
-              <ListItem button key={todo.id} onClick={this.toggleDrawer}>
+              <ListItem button key={todo.code} onClick={this.toggleDrawer}>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={todo.text} />
+                <ListItemText primary={todo.name} />
               </ListItem>
             ))
           }
@@ -96,7 +118,7 @@ const withSidebar = (WrappedComponent) => {
             <ListItemText primary={'Nova lista'} />
           </ListItem>
         </List>
-      </React.Fragment>;
+      </div>;
     }
 
     render() {
