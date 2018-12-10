@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import PropTypes from 'prop-types';
+import { bindActionCreators, compose } from 'redux';
+import { connect } from 'react-redux';
 import uuidv3 from 'uuid/v3';
 // HIGHER ORDER COMPONENTS
-import withSidebar from '../../components/HigherOrderComponents/withSidebar';
+import withSidebar from '../../components/HigherOrderComponents/WithSidebar';
 // VIEWS
 import TodoList from './views/todo-list';
 
@@ -113,4 +114,19 @@ TodoListContainer.propTypes = {
   handlers: PropTypes.object.isRequired
 };
 
-export default withSidebar(TodoListContainer);
+const mapStateToProps = (state) => {
+  return {
+    todos: state.todos,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({}, dispatch)
+  };
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withSidebar
+)(TodoListContainer);
