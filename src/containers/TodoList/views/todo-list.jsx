@@ -8,7 +8,6 @@ import Fab from '@material-ui/core/Fab';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 // MATERIAL UI ICONS
 import AddIcon from '@material-ui/icons/Add';
@@ -33,12 +32,11 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   heroContent: {
-    maxWidth: 600,
+    display: 'flex',
     margin: '0 auto',
-    padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
-  },
-  heroButtons: {
-    marginTop: theme.spacing.unit * 4,
+    height: 250,
+    alignItems: 'flex-end',
+    padding: `0 ${theme.spacing.unit * 2}px`,
   },
 });
 
@@ -53,32 +51,13 @@ const TodoList = ({
     <Grid container spacing={0}>
       <Grid item xs={12}>
         <div className={classes.heroUnit}>
-          <IconButton className={classes.button} aria-label="Open sidebar">
+          <IconButton className={classes.button} aria-label="Open sidebar" onClick={handlers.toggleSidebar}>
             <MenuIcon />
           </IconButton>
           <div className={classes.heroContent}>
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+            <Typography component="h1" variant="h2" align="left" color="textPrimary" gutterBottom>
               Album layout
             </Typography>
-            <Typography variant="h6" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
-              Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={16} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
           </div>
         </div>
       </Grid>

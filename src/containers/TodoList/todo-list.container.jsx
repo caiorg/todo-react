@@ -1,8 +1,9 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 // import PropTypes from 'prop-types';
 import uuidv3 from 'uuid/v3';
+// HIGHER ORDER COMPONENTS
+import withSidebar from '../../components/HigherOrderComponents/withSidebar';
 // VIEWS
 import TodoList from './views/todo-list';
 
@@ -89,6 +90,7 @@ class TodoListContainer extends Component {
 
   get handlers() {
     return {
+      ...this.props.handlers,
       toggleCompletion: this.toggleCompletion,
       toggleAddTodoDrawer: this.toggleAddTodoDrawer,
       changeTextField: this.handleChangeTextField,
@@ -107,6 +109,8 @@ class TodoListContainer extends Component {
   }
 }
 
-TodoListContainer.propTypes = {};
+TodoListContainer.propTypes = {
+  handlers: PropTypes.object.isRequired
+};
 
-export default TodoListContainer;
+export default withSidebar(TodoListContainer);
