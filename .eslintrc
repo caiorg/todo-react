@@ -29,7 +29,7 @@
     "max-len": [1, 120, 2, {
       "ignoreComments": true
     }],
-    "indent": ["warn", 2],
+    "indent": ["error", 2, {"SwitchCase": 1}],
     "linebreak-style": ["error", "unix"],
     "eol-last": ["error", "always"],
     "quotes": ["warn", "single", {

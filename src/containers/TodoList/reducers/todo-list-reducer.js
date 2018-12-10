@@ -3,10 +3,10 @@ import _ from 'lodash';
 
 let initialState = {
   fields: {
-    listName: '',
+    text: ''
   },
   lists: {
-    todosLists: null
+    todos: []
   }
 };
 
@@ -26,8 +26,8 @@ const withSidebarReducer = (state = initialState, action) => {
   switch (type) {
     case types.SET_FIELD:
       return { ...state, fields: mergeFields(state.fields, payload) };
-    case `${types.FETCH_TODO_LISTS}_FULFILLED`:
-      return {...state, lists: {...state.lists, todosLists: payload}};
+    case `${types.FETCH_TODOS}_FULFILLED`:
+      return { ...state, lists: { ...state.lists, todos: payload }};
     default:
       return state;
   }

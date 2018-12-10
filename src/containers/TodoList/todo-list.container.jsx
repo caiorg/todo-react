@@ -12,7 +12,8 @@ class TodoListContainer extends Component {
 
   state = {
     ui: {
-      openAddTodo: false
+      openAddTodo: false,
+      createTodoList: false
     },
     todos: [
       {
