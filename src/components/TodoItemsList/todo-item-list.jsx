@@ -8,7 +8,8 @@ import TodoItem from '../TodoItem';
 
 const TodoItemsList = ({
   todos,
-  onClick
+  onClick,
+  onDelete
 }) => {
 
   return <List>
@@ -16,7 +17,7 @@ const TodoItemsList = ({
       todos.map((todo, index) =>
         (
           <React.Fragment key={index}>
-            <TodoItem {...todo} onClick={onClick(index)} />
+            <TodoItem {...todo} onClick={onClick(index)} onDelete={onDelete} />
             {
               index < todos.length - 1 &&
               <Divider />
@@ -37,6 +38,7 @@ TodoItemsList.propTypes = {
     })
   ).isRequired,
   onClick: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default TodoItemsList;

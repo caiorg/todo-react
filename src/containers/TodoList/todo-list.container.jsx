@@ -59,6 +59,9 @@ class TodoListContainer extends Component {
     event.preventDefault();
     const {todos, fields} = this.state;
     this.setState({
+      ui: {
+        openAddTodo: false
+      },
       todos: [
         ...todos,
         {
@@ -67,6 +70,12 @@ class TodoListContainer extends Component {
           completed: false
         }
       ]
+    });
+  }
+
+  handleDeleteTodo = (id) => () => {
+    this.setState({
+      todos: this.state.todos.filter(item => item.id !== id)
     });
   }
 
@@ -83,7 +92,8 @@ class TodoListContainer extends Component {
       toggleCompletion: this.toggleCompletion,
       toggleAddTodoDrawer: this.toggleAddTodoDrawer,
       changeTextField: this.handleChangeTextField,
-      saveTodo: this.handleSaveTodo
+      saveTodo: this.handleSaveTodo,
+      deleteTodo: this.handleDeleteTodo
     };
   }
 
