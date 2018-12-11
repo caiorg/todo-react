@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 // ACTIONS
 import * as withSidebarActions from './actions/with-sidebar-actions';
 // MATERIAL UI COMPONENTS
@@ -48,6 +49,8 @@ const withSidebar = (WrappedComponent) => {
     }
 
     componentDidMount() {
+      // eslint-disable-next-line
+      console.log(this.props);
       this.props.actions.getTodoLists()
         .then(res => {
           if (!Array.isArray(res.value) || res.value.length === 0) {
@@ -112,7 +115,7 @@ const withSidebar = (WrappedComponent) => {
             todosLists &&
             todosLists.length > 0 &&
             todosLists.map((todo, index) => (
-              <ListItem button key={todo.code} onClick={this.toggleDrawer}>
+              <ListItem button key={todo.code} component={Link} to={`/${todo.code}`} onClick={this.toggleDrawer}>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={todo.name} />
               </ListItem>
@@ -143,7 +146,8 @@ const withSidebar = (WrappedComponent) => {
   WithSidebar.displayName = `WithSidebar(${getDisplayName(WrappedComponent)})`;
 
   WithSidebar.propTypes = {
-    withSidebar: PropTypes.object.isRequired
+    withSidebar: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
   };
 
   const mapStateToProps = (state) => {
@@ -162,6 +166,7 @@ const withSidebar = (WrappedComponent) => {
   };
 
   return compose(
+    withRouter,
     connect(mapStateToProps, mapDispatchToProps),
     withStyles(styles),
   )(WithSidebar);

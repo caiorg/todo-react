@@ -10,6 +10,7 @@ import withSidebar from '../../components/HigherOrderComponents/WithSidebar';
 import * as todoListActions from './actions/todo-list-actions';
 // VIEWS
 import TodoList from './views/todo-list';
+import NoLists from './views/no-lists';
 
 class TodoListContainer extends Component {
 
@@ -44,6 +45,16 @@ class TodoListContainer extends Component {
     const {actions, match} = this.props;
     actions.getTodosListDetails(match.params.id);
     actions.getTodos(match.params.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {match: prevMatch} = prevProps;
+    const {match: thisMatch, actions} = this.props;
+
+    if (thisMatch.params.id !== prevMatch.params.id) {
+      actions.getTodosListDetails(thisMatch.params.id);
+      actions.getTodos(thisMatch.params.id);
+    }
   }
 
   toggleCompletion = (index) => () => {
@@ -121,21 +132,28 @@ class TodoListContainer extends Component {
     };
   }
 
+  renderView = () => {
+    const {todoList: {fields, lists}, match} = this.props;
+    if (match.params.id)
+      return <TodoList
+        ui={this.state.ui}
+        fields={fields}
+        lists={lists}
+        handlers={this.handlers}
+      />;
+
+    return <NoLists handlers={this.handlers} />;
+  };
+
   render() {
-    const {todoList: {fields, lists}} = this.props;
-    return <TodoList
-      ui={this.state.ui}
-      fields={fields}
-      lists={lists}
-      handlers={this.handlers}
-    />;
+    return this.renderView();
   }
 }
 
 TodoListContainer.propTypes = {
   todoList: PropTypes.object.isRequired,
   handlers: PropTypes.object.isRequired,
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.object,
   actions: PropTypes.object.isRequired,
   match: PropTypes.object,
 };
