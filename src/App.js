@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 // MATERIAL UI COMPONENTS
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
@@ -18,7 +19,9 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <TodoList/>
+        <Router>
+          <Route path="/todo-list/:id" component={TodoList} />
+        </Router>
       </MuiThemeProvider>
     );
   }

@@ -42,7 +42,8 @@ const withSidebar = (WrappedComponent) => {
         toggleSidebar: this.toggleDrawer,
         toggleTodoListCreation: this.toggleTodoListCreation,
         changeTextField: this.handleChangeTextField,
-        createTodoList: this.handleTodoListCreation
+        createTodoList: this.handleTodoListCreation,
+        deleteTodoList: this.handleDeleteTodoList,
       };
     }
 
@@ -79,7 +80,7 @@ const withSidebar = (WrappedComponent) => {
 
     handleTodoListCreation = (event) => {
       event.preventDefault();
-      
+
       const {withSidebar: {fields}, actions} = this.props;
 
       const payload = {
@@ -95,6 +96,12 @@ const withSidebar = (WrappedComponent) => {
           //eslint-disable-next-line
           console.log(err);
         });
+    }
+
+    handleDeleteTodoList = () => {
+      // TODO: Delete Todo List
+      // eslint-disable-next-line
+      console.log('// TODO: Delete Todo List');
     }
 
     get sideList() {

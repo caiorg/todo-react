@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import uuidv3 from 'uuid/v3';
 // HIGHER ORDER COMPONENTS
 import withSidebar from '../../components/HigherOrderComponents/WithSidebar';
+// ACTIONS
+import * as todoListActions from './actions/todo-list-actions';
 // VIEWS
 import TodoList from './views/todo-list';
 
@@ -37,6 +40,12 @@ class TodoListContainer extends Component {
     }
   }
 
+  componentDidMount() {
+    const {actions, match} = this.props;
+    actions.getTodosListDetails(match.params.id);
+    actions.getTodos(match.params.id);
+  }
+
   toggleCompletion = (index) => () => {
     const targetTodo = { ...this.state.todos[index]
     };
@@ -53,7 +62,17 @@ class TodoListContainer extends Component {
   toggleAddTodoDrawer = () => {
     this.setState({
       ui: {
+        ...this.state.ui,
         openAddTodo: !this.state.ui.openAddTodo
+      }
+    });
+  }
+
+  toggleOptionsMenu = event => {
+    this.setState({
+      ...this.state.ui,
+      ui: {
+        optionsMenuAnchorEl: this.state.ui.optionsMenuAnchorEl ? null : event.target
       }
     });
   }
@@ -97,37 +116,44 @@ class TodoListContainer extends Component {
       toggleAddTodoDrawer: this.toggleAddTodoDrawer,
       changeTextField: this.handleChangeTextField,
       saveTodo: this.handleSaveTodo,
-      deleteTodo: this.handleDeleteTodo
+      deleteTodo: this.handleDeleteTodo,
+      toggleOptionsMenu: this.toggleOptionsMenu
     };
   }
 
   render() {
+    const {todoList: {fields, lists}} = this.props;
     return <TodoList
       ui={this.state.ui}
-      fields={this.state.fields}
-      lists={{todos: this.state.todos}}
+      fields={fields}
+      lists={lists}
       handlers={this.handlers}
     />;
   }
 }
 
 TodoListContainer.propTypes = {
-  handlers: PropTypes.object.isRequired
+  todoList: PropTypes.object.isRequired,
+  handlers: PropTypes.object.isRequired,
+  fields: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+  match: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
-    todos: state.todos,
+    todoList: state.todoList,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    actions: bindActionCreators({}, dispatch)
+    actions: bindActionCreators({...todoListActions}, dispatch)
   };
 };
 
 export default compose(
+  withRouter,
   connect(mapStateToProps, mapDispatchToProps),
   withSidebar
 )(TodoListContainer);

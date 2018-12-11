@@ -9,9 +9,13 @@ import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 // MATERIAL UI ICONS
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 // CUSTOM COMPONENTS
 import TodoItemsList from '../../../components/TodoItemsList';
 // VIEWS
@@ -23,10 +27,15 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
-  menu: {
+  leftTopButton: {
     position: 'absolute',
-    top: theme.spacing.unit * 2,
-    left: theme.spacing.unit * 2,
+    top: 0,
+    left: 0,
+  },
+  rightTopButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
   heroUnit: {
     backgroundColor: theme.palette.background.paper,
@@ -51,14 +60,30 @@ const TodoList = ({
     <Grid container spacing={0}>
       <Grid item xs={12}>
         <div className={classes.heroUnit}>
-          <IconButton className={classes.button} aria-label="Open sidebar" onClick={handlers.toggleSidebar}>
+          <IconButton className={classes.topLeftButton} aria-label="Open sidebar" onClick={handlers.toggleSidebar}>
             <MenuIcon />
           </IconButton>
           <div className={classes.heroContent}>
             <Typography component="h1" variant="h2" align="left" color="textPrimary" gutterBottom>
-              Album layout
+              {
+                fields.list &&
+                fields.list.name
+              }
             </Typography>
           </div>
+          <IconButton className={classes.rightTopButton} aria-label="Options" onClick={handlers.toggleOptionsMenu}>
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            anchorEl={ui.optionsMenuAnchorEl}
+            open={Boolean(ui.optionsMenuAnchorEl)}
+            onClose={handlers.toggleOptionsMenu}
+          >
+            <MenuItem onClick={handlers.deleteTodoList}>
+              <DeleteOutlineIcon /> Excluir lista
+            </MenuItem>
+          </Menu>
         </div>
       </Grid>
       <Grid item xs={12}>

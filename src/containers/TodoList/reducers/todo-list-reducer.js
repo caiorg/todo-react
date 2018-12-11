@@ -3,7 +3,8 @@ import _ from 'lodash';
 
 let initialState = {
   fields: {
-    text: ''
+    text: '',
+    list: null
   },
   lists: {
     todos: []
@@ -20,12 +21,14 @@ const mergeFields = (fields, payload) => {
   return _.merge(updatedFields, { pristine: false });
 };
 
-const withSidebarReducer = (state = initialState, action) => {
+const todoListReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
     case types.SET_FIELD:
       return { ...state, fields: mergeFields(state.fields, payload) };
+    case `${types.FETCH_TODOS_LIST_DETAILS}_FULFILLED`:
+      return { ...state, fields: mergeFields(state.fields, {field: 'list', value: payload})};
     case `${types.FETCH_TODOS}_FULFILLED`:
       return { ...state, lists: { ...state.lists, todos: payload }};
     default:
@@ -33,4 +36,4 @@ const withSidebarReducer = (state = initialState, action) => {
   }
 };
 
-export default withSidebarReducer;
+export default todoListReducer;

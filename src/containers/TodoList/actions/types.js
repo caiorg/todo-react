@@ -1,4 +1,5 @@
 export default {
   SET_FIELD: '@@TodoList/SET_FIELD',
   FETCH_TODOS: '@@TodoList/FETCH_TODOS',
+  FETCH_TODOS_LIST_DETAILS: '@@TodoList/FETCH_TODOS_LIST_DETAILS',
 };
